@@ -120,7 +120,7 @@ pomodoro-timer-pro/
 ├── script.js           # Full application logic and interactions
 ├── README.md           # This documentation
 ├── LICENSE             # MIT License details
-
+├── .gitignore
 ```
 
 ## Configuration Options
