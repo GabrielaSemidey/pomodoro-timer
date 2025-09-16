@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>✨ Pomodoro Timer Aesthetic</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Font awesome para los iconos bonitos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Google Fonts para tipografía linda -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Contenedor principal con el fondo que va a cambiar -->
+    <div class="container" id="container">
+        
+        <!-- Header con el título y modo actual -->
+        <header class="header">
+            <h1 class="title">🍅 Pomodoro</h1>
+            <p class="subtitle" id="currentMode">Modo: Trabajo</p>
+            <!-- Indicador de ciclo -->
+            <div class="cycle-indicator" id="cycleIndicator">
+                <div class="cycle-dots">
+                    <div class="dot active" id="dot1"></div>
+                    <div class="dot" id="dot2"></div>
+                    <div class="dot" id="dot3"></div>
+                    <div class="dot" id="dot4"></div>
+                </div>
+                <p class="cycle-text">Pomodoro 1 de 4</p>
+            </div>
+        </header>
+
+        <!-- El círculo principal donde va el timer -->
+        <div class="timer-container">
+            <!-- Círculo de progreso (la parte que se va llenando) -->
+            <div class="progress-ring">
+                <svg class="progress-svg" width="300" height="300">
+                    <!-- Círculo de fondo (gris clarito) -->
+                    <circle class="progress-background" 
+                            cx="150" cy="150" r="140" 
+                            fill="none" 
+                            stroke="rgba(255,255,255,0.1)" 
+                            stroke-width="8"/>
+                    <!-- Círculo que se va llenando -->
+                    <circle class="progress-circle" 
+                            cx="150" cy="150" r="140" 
+                            fill="none" 
+                            stroke="#ff6b6b" 
+                            stroke-width="8"
+                            stroke-linecap="round"/>
+                </svg>
+                
+                <!-- Contenido dentro del círculo -->
+                <div class="timer-content">
+                    <!-- Tiempo restante -->
+                    <div class="time-display" id="timeDisplay">25:00</div>
+                    <!-- Sesiones completadas -->
+                    <div class="session-counter">
+                        Sesión <span id="sessionCount">1</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Botones de control -->
+        <div class="controls">
+            <button class="control-btn" id="playPauseBtn" aria-label="Reproducir o pausar timer">
+                <i class="fas fa-play" id="playPauseIcon" aria-hidden="true"></i>
+            </button>
+            <button class="control-btn" id="resetBtn" aria-label="Reiniciar timer">
+                <i class="fas fa-redo-alt" aria-hidden="true"></i>
+            </button>
+            <button class="control-btn" id="statsBtn" aria-label="Estadísticas">
+                <i class="fas fa-chart-bar" aria-hidden="true"></i>
+            </button>
+            <button class="control-btn" id="settingsBtn" aria-label="Configuración">
+                <i class="fas fa-cog" aria-hidden="true"></i>
+            </button>
+        </div>
+
+        <!-- Panel de estadísticas -->
+        <div class="stats-panel" id="statsPanel" role="dialog" aria-labelledby="stats-title" aria-hidden="true">
+            <div class="stats-header">
+                <h3 id="stats-title">📊 Estadísticas</h3>
+                <button class="close-btn" id="closeStatsBtn" aria-label="Cerrar estadísticas">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="stats-content">
+                <!-- Estadísticas de hoy -->
+                <div class="stats-card">
+                    <div class="stats-icon">🏆</div>
+                    <div class="stats-info">
+                        <div class="stats-number" id="todayPomodoros">0</div>
+                        <div class="stats-label">Pomodoros hoy</div>
+                    </div>
+                </div>
+
+                <div class="stats-card">
+                    <div class="stats-icon">⏱️</div>
+                    <div class="stats-info">
+                        <div class="stats-number" id="totalFocusTime">0h 0m</div>
+                        <div class="stats-label">Tiempo total</div>
+                    </div>
+                </div>
+
+                <div class="stats-card">
+                    <div class="stats-icon">🔥</div>
+                    <div class="stats-info">
+                        <div class="stats-number" id="currentStreak">0</div>
+                        <div class="stats-label">Racha de días</div>
+                    </div>
+                </div>
+
+                <!-- Progreso semanal -->
+                <div class="weekly-progress">
+                    <h4>📈 Esta semana</h4>
+                    <div class="progress-bars">
+                        <div class="progress-item">
+                            <span class="day-label">L</span>
+                            <div class="progress-bar">
+                                <div class="progress-fill" data-day="monday"></div>
+                            </div>
+                            <span class="day-count" id="mondayCount">0</span>
+                        </div>
+                        <div class="progress-item">
+                            <span class="day-label">M</span>
+                            <div class="progress-bar">
+                                <div class="progress-fill" data-day="tuesday"></div>
+                            </div>
+                            <span class="day-count" id="tuesdayCount">0</span>
+                        </div>
+                        <div class="progress-item">
+                            <span class="day-label">M</span>
+                            <div class="progress-bar">
+                                <div class="progress-fill" data-day="wednesday"></div>
+                            </div>
+                            <span class="day-count" id="wednesdayCount">0</span>
+                        </div>
+                        <div class="progress-item">
+                            <span class="day-label">J</span>
+                            <div class="progress-bar">
+                                <div class="progress-fill" data-day="thursday"></div>
+                            </div>
+                            <span class="day-count" id="thursdayCount">0</span>
+                        </div>
+                        <div class="progress-item">
+                            <span class="day-label">V</span>
+                            <div class="progress-bar">
+                                <div class="progress-fill" data-day="friday"></div>
+                            </div>
+                            <span class="day-count" id="fridayCount">0</span>
+                        </div>
+                        <div class="progress-item">
+                            <span class="day-label">S</span>
+                            <div class="progress-bar">
+                                <div class="progress-fill" data-day="saturday"></div>
+                            </div>
+                            <span class="day-count" id="saturdayCount">0</span>
+                        </div>
+                        <div class="progress-item">
+                            <span class="day-label">D</span>
+                            <div class="progress-bar">
+                                <div class="progress-fill" data-day="sunday"></div>
+                            </div>
+                            <span class="day-count" id="sundayCount">0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mensaje motivacional -->
+                <div class="motivation-card">
+                    <div class="motivation-text" id="motivationText">
+                        ¡Comienza tu primer pomodoro! 🚀
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Panel de configuración (inicialmente oculto) -->
+        <div class="settings-panel" id="settingsPanel" role="dialog" aria-labelledby="settings-title" aria-hidden="true">
+            <div class="settings-header">
+                <h3 id="settings-title">⚙️ Configuración</h3>
+                <button class="close-btn" id="closeSettingsBtn" aria-label="Cerrar configuración">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="settings-content">
+                <div class="setting-item">
+                    <label for="workTime">Tiempo de trabajo (minutos):</label>
+                    <input type="number" id="workTime" min="1" max="60" value="25" aria-describedby="work-time-help">
+                    <span id="work-time-help" class="sr-only">Entre 1 y 60 minutos</span>
+                </div>
+                
+                <div class="setting-item">
+                    <label for="breakTime">Tiempo de descanso corto (minutos):</label>
+                    <input type="number" id="breakTime" min="1" max="30" value="5" aria-describedby="break-time-help">
+                    <span id="break-time-help" class="sr-only">Entre 1 y 30 minutos</span>
+                </div>
+
+                <div class="setting-item">
+                    <label for="longBreakTime">Tiempo de descanso largo (minutos):</label>
+                    <input type="number" id="longBreakTime" min="15" max="60" value="30" aria-describedby="long-break-help">
+                    <span id="long-break-help" class="sr-only">Entre 15 y 60 minutos</span>
+                </div>
+                
+                <div class="setting-item">
+                    <label for="soundToggle">Sonidos:</label>
+                    <input type="checkbox" id="soundToggle" checked aria-describedby="sound-help">
+                    <span class="checkbox-label">Activar sonidos</span>
+                    <span id="sound-help" class="sr-only">Activar o desactivar sonidos de notificación</span>
+                </div>
+
+                <div class="setting-item">
+                    <label for="soundType">Tipo de sonido:</label>
+                    <select id="soundType" class="sound-select">
+                        <option value="beep">Beep minimalista</option>
+                        <option value="nature">Sonidos naturales</option>
+                        <option value="zen">Campanas zen</option>
+                    </select>
+                </div>
+
+                <div class="setting-item">
+                    <label for="volumeControl">Volumen:</label>
+                    <input type="range" id="volumeControl" min="0" max="100" value="50" class="volume-slider">
+                    <span class="volume-value" id="volumeValue">50%</span>
+                </div>
+                
+                <button class="save-settings-btn" id="saveSettings">Guardar</button>
+            </div>
+        </div>
+
+        <!-- Modal de transición -->
+        <div class="transition-modal" id="transitionModal" role="dialog" aria-labelledby="modal-title" aria-hidden="true">
+            <div class="modal-overlay"></div>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="modal-title" class="modal-title">🎉 ¡Sesión Completada!</h3>
+                </div>
+                
+                <div class="modal-body">
+                    <div class="completion-message" id="completionMessage">
+                        ¡Excelente trabajo! Has completado tu pomodoro de trabajo.
+                    </div>
+                    
+                    <div class="time-info" id="timeInfo">
+                        <div class="completed-time">
+                            <span class="time-label">Tiempo completado:</span>
+                            <span class="time-value" id="completedTimeValue">25:00</span>
+                        </div>
+                        <div class="next-session">
+                            <span class="next-label">Siguiente:</span>
+                            <span class="next-value" id="nextSessionValue">Descanso de 5 minutos</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="modal-actions">
+                    <button class="modal-btn primary-btn" id="continueBtn">
+                        <i class="fas fa-play"></i>
+                        <span id="continueBtnText">Iniciar Descanso</span>
+                    </button>
+                    
+                    <button class="modal-btn secondary-btn" id="extraTimeBtn">
+                        <i class="fas fa-clock"></i>
+                        <span>+5 Minutos Extra</span>
+                    </button>
+                    
+                    <button class="modal-btn tertiary-btn" id="skipBtn">
+                        <i class="fas fa-forward"></i>
+                        <span id="skipBtnText">Saltar Descanso</span>
+                    </button>
+                </div>
+                
+                <div class="modal-footer">
+                    <p class="modal-stats">
+                        🏆 <span id="modalTodayCount">0</span> pomodoros hoy | 
+                        🔥 <span id="modalStreak">0</span> días de racha
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer con info -->
+        <footer class="footer">
+            <p>Creado con 💜 por Gab</p>
+        </footer>
+    </div>
+
+    <!-- Vinculamos nuestro JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>
