@@ -2,7 +2,24 @@
 
 A sophisticated Pomodoro timer application featuring intelligent cycle management, comprehensive statistics tracking, and intuitive user controls. Built with vanilla JavaScript and modern CSS for optimal performance and accessibility.
 
+## Screenshots
 
+### Desktop Interface
+<img width="878" height="912" alt="Image" src="https://github.com/user-attachments/assets/76a2a3e7-c11f-4796-a6dd-14f65502301f" />
+
+<img width="878" height="912" alt="Image" src="https://github.com/user-attachments/assets/afddc11b-cf78-480a-9eca-8f1ed90cfe74" />
+
+### Statistics Dashboard
+<img width="878" height="914" alt="Image" src="https://github.com/user-attachments/assets/e98308cc-e5e5-47c3-923b-a36025413f71" />
+
+### Modal Controls
+<img width="874" height="905" alt="Image" src="https://github.com/user-attachments/assets/69e858d1-ed95-446c-b7d0-099d2b72254f" />
+
+### Rest Mode
+<img width="878" height="916" alt="Image" src="https://github.com/user-attachments/assets/c2a53b26-ed4c-4d4f-8b61-341eb727ce98" />
+
+### Finish Pomodoro Modal
+<img width="881" height="908" alt="Image" src="https://github.com/user-attachments/assets/93844c6f-4bc0-4c9e-8481-844972ef094e" />
 
 ## Features
 
@@ -99,7 +116,7 @@ For easy sharing and access from anywhere:
 1. Fork this repository to your GitHub account
 2. Enable GitHub Pages in your repository settings
 3. Select "Deploy from branch" and choose the main branch
-4. Your timer will be live at `https://GabrielaSemidey.github.io/pomodoro-timer-pro`
+4. Your timer will be live at `https://yourusername.github.io/pomodoro-timer-pro`
 
 ## Browser Compatibility
 
